@@ -1,0 +1,11 @@
+estV<-function(b0,b1,b2,b3,a0,a1,B1,t1,t2,SI){
+  lnM1=b0+b1*SI+b2/t1+b3*log(B1,base=exp(1))
+  lnG2=t1/t2*log(B1,base=exp(1))+a0*(1-t1/t2)+a1*SI*(1-t1/t2)
+  lnM2=lnM1+b2*(1/t2-1/t1)+b3*(lnG2-log(B1,base=exp(1)))
+  G1=B1
+  M1=exp(1)^lnM1
+  G2=exp(1)^lnG2
+  M2=exp(1)^lnM2
+  return(list(G1=G1,M1=M1,Gpre=G2,Mpre=M2,
+              Value=data.frame(year=c(t1,t2),G=c(G1,G2),M=c(M1,M2))))
+}

@@ -1,0 +1,22 @@
+clutter_pre<-function(b0,b1,b2,b3,a0,a1,
+                      B1,SI,t1,growth_years,
+                      thinning_years,thinning_intensity){
+  res_pre<-Vres(clutter_simulation(b0=b0,b1=b1,b2=b2,b3=b3,a0=a0,a1=a1,
+                                   B1=B1,SI=SI,t1=t1,growth_years=growth_years,
+                                   thinning_years=thinning_years,
+                                   thinning_intensity=thinning_intensity))
+  rownames(res_pre$Growth)<-1:nrow(res_pre$Growth)
+  res_control<-Vres(clutter_simulation(b0=b0,b1=b1,b2=b2,b3=b3,a0=a0,a1=a1,
+                                       B1=B1,SI=SI,t1=t1,growth_years=growth_years,
+                                       thinning_years=thinning_years,
+                                       thinning_intensity=rep(0,length=length(thinning_years))))
+  rownames(res_control$Growth)<-1:nrow(res_control$Growth)
+  Comparison<-rbind(res_control$Total,res_pre$Total)
+  row.names(Comparison)<-c("Control","Optimal")
+  list(
+    thinning_years=thinning_years,
+    thinning_intensity=thinning_intensity,
+    Comparison=Comparison,
+    res_pre=res_pre,
+    res_control=res_control)
+}
